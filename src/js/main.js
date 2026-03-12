@@ -1,264 +1,210 @@
 /**
  * Main JavaScript Entry Point
- * BoilerPlateloadingTest10000
+ * This file initializes the application and imports necessary modules
  */
 
-'use strict';
+import { formatDate, debounce, throttle } from './utils/helpers.js';
 
-// Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize the application
-  initApp();
-});
+/**
+ * Application State
+ */
+const state = {
+  isInitialized: false,
+  theme: 'light'
+};
 
 /**
  * Initialize the application
  */
-function initApp() {
-  // Set current year in footer
-  setCurrentYear();
+function init() {
+  if (state.isInitialized) {
+    console.warn('Application already initialized');
+    return;
+  }
 
-  // Initialize navigation
-  initNavigation();
+  console.warn('Initializing BoilerPlateloadingTest10000...');
 
-  // Initialize forms
-  initContactForm();
+  // Set up event listeners
+  setupEventListeners();
 
-  // Initialize CTA button
-  initCTAButton();
+  // Initialize components
+  initializeComponents();
 
-  // Initialize smooth scrolling
-  initSmoothScrolling();
+  // Mark as initialized
+  state.isInitialized = true;
 
-  // Log initialization
-  console.log('✅ Application initialized successfully');
+  console.warn('Application initialized successfully');
+  console.warn(`Current time: ${formatDate(new Date())}`);
 }
 
 /**
- * Set current year in footer
+ * Set up event listeners
  */
-function setCurrentYear() {
-  const yearElement = document.getElementById('currentYear');
-  if (yearElement) {
-    yearElement.textContent = new Date().getFullYear();
-  }
-}
-
-/**
- * Initialize navigation toggle for mobile
- */
-function initNavigation() {
-  const navToggle = document.querySelector('.nav__toggle');
-  const navMenu = document.querySelector('.nav__menu');
-
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('is-open');
-
-      // Update aria-expanded attribute
-      const isOpen = navMenu.classList.contains('is-open');
-      navToggle.setAttribute('aria-expanded', isOpen);
-    });
-
-    // Close menu when clicking on a link
-    const navLinks = document.querySelectorAll('.nav__link');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('is-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-
-    // Close menu when clicking outside
-    document.addEventListener('click', event => {
-      if (!event.target.closest('.nav')) {
-        navMenu.classList.remove('is-open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-}
-
-/**
- * Initialize contact form
- */
-function initContactForm() {
-  const contactForm = document.getElementById('contactForm');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', event => {
-      event.preventDefault();
-
-      // Get form data
-      const formData = new FormData(contactForm);
-      const data = Object.fromEntries(formData.entries());
-
-      // Validate form
-      if (validateContactForm(data)) {
-        // In a real application, you would send this data to a server
-        console.log('Form submitted:', data);
-
-        // Show success message
-        showNotification('Message sent successfully!', 'success');
-
-        // Reset form
-        contactForm.reset();
-      }
-    });
-  }
-}
-
-/**
- * Validate contact form data
- * @param {Object} data - Form data
- * @returns {boolean} - Validation result
- */
-function validateContactForm(data) {
-  const { name, email, message } = data;
-
-  if (!name || name.trim().length < 2) {
-    showNotification('Please enter a valid name', 'error');
-    return false;
-  }
-
-  if (!validateEmail(email)) {
-    showNotification('Please enter a valid email address', 'error');
-    return false;
-  }
-
-  if (!message || message.trim().length < 10) {
-    showNotification('Message must be at least 10 characters long', 'error');
-    return false;
-  }
-
-  return true;
-}
-
-/**
- * Initialize CTA button
- */
-function initCTAButton() {
+function setupEventListeners() {
+  // CTA Button
   const ctaButton = document.getElementById('ctaButton');
-
   if (ctaButton) {
-    ctaButton.addEventListener('click', () => {
-      // Scroll to features section
-      const featuresSection = document.getElementById('features');
-      if (featuresSection) {
-        featuresSection.scrollIntoView({ behavior: 'smooth' });
-      }
+    ctaButton.addEventListener('click', handleCtaClick);
+  }
+
+  // Contact Form
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', handleFormSubmit);
+  }
+
+  // Smooth scrolling for navigation links
+  const navLinks = document.querySelectorAll('.nav__link');
+  navLinks.forEach(link => {
+    link.addEventListener('click', handleSmoothScroll);
+  });
+
+  // Window resize handler with debounce
+  window.addEventListener('resize', debounce(handleResize, 250));
+
+  // Window scroll handler with throttle
+  window.addEventListener('scroll', throttle(handleScroll, 100));
+}
+
+/**
+ * Initialize components
+ */
+function initializeComponents() {
+  // Add active class to current section in navigation
+  updateActiveNavLink();
+
+  // Add animations on scroll (if elements are visible)
+  observeElements();
+}
+
+/**
+ * Handle CTA button click
+ */
+function handleCtaClick(event) {
+  event.preventDefault();
+  console.warn('CTA button clicked!');
+
+  // Scroll to features section
+  const featuresSection = document.getElementById('features');
+  if (featuresSection) {
+    featuresSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+/**
+ * Handle form submission
+ */
+function handleFormSubmit(event) {
+  event.preventDefault();
+
+  const formData = new FormData(event.target);
+  const data = Object.fromEntries(formData);
+
+  console.warn('Form submitted with data:', data);
+
+  // Show success message
+  alert('Thank you for your message! We will get back to you soon.');
+
+  // Reset form
+  event.target.reset();
+}
+
+/**
+ * Handle smooth scrolling for navigation links
+ */
+function handleSmoothScroll(event) {
+  event.preventDefault();
+
+  const targetId = event.currentTarget.getAttribute('href');
+  const targetSection = document.querySelector(targetId);
+
+  if (targetSection) {
+    const headerOffset = 70;
+    const elementPosition = targetSection.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+    window.scrollTo({
+      top: offsetPosition,
+      behavior: 'smooth'
     });
   }
 }
 
 /**
- * Initialize smooth scrolling for anchor links
+ * Handle window resize
  */
-function initSmoothScrolling() {
-  const anchorLinks = document.querySelectorAll('a[href^="#"]');
-
-  anchorLinks.forEach(link => {
-    link.addEventListener('click', event => {
-      const targetId = link.getAttribute('href');
-
-      // Skip if it's just "#"
-      if (targetId === '#') {
-        return;
-      }
-
-      const targetElement = document.querySelector(targetId);
-
-      if (targetElement) {
-        event.preventDefault();
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-
-        // Update URL without scrolling
-        history.pushState(null, null, targetId);
-      }
-    });
+function handleResize() {
+  console.warn('Window resized:', {
+    width: window.innerWidth,
+    height: window.innerHeight
   });
 }
 
 /**
- * Show notification message
- * @param {string} message - Notification message
- * @param {string} type - Notification type (success, error, info, warning)
+ * Handle window scroll
  */
-function showNotification(message, type = 'info') {
-  // Create notification element
-  const notification = document.createElement('div');
-  notification.className = `notification notification--${type}`;
-  notification.textContent = message;
-
-  // Add styles
-  Object.assign(notification.style, {
-    position: 'fixed',
-    top: '20px',
-    right: '20px',
-    padding: '16px 24px',
-    borderRadius: '8px',
-    backgroundColor: getNotificationColor(type),
-    color: '#ffffff',
-    fontWeight: '500',
-    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-    zIndex: '9999',
-    animation: 'slideInRight 0.3s ease-out',
-  });
-
-  // Add to DOM
-  document.body.appendChild(notification);
-
-  // Remove after 3 seconds
-  setTimeout(() => {
-    notification.style.animation = 'slideOutRight 0.3s ease-out';
-    setTimeout(() => {
-      document.body.removeChild(notification);
-    }, 300);
-  }, 3000);
+function handleScroll() {
+  updateActiveNavLink();
 }
 
 /**
- * Get notification color based on type
- * @param {string} type - Notification type
- * @returns {string} - Color value
+ * Update active navigation link based on scroll position
  */
-function getNotificationColor(type) {
-  const colors = {
-    success: '#10b981',
-    error: '#ef4444',
-    warning: '#f59e0b',
-    info: '#06b6d4',
+function updateActiveNavLink() {
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav__link');
+
+  let currentSection = '';
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.clientHeight;
+
+    if (window.pageYOffset >= sectionTop - 100) {
+      currentSection = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('active');
+    if (link.getAttribute('href') === `#${currentSection}`) {
+      link.classList.add('active');
+    }
+  });
+}
+
+/**
+ * Observe elements for intersection (scroll animations)
+ */
+function observeElements() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
   };
 
-  return colors[type] || colors.info;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, observerOptions);
+
+  // Observe feature cards
+  const featureCards = document.querySelectorAll('.feature-card');
+  featureCards.forEach(card => observer.observe(card));
 }
 
-// Add notification animations to document
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes slideInRight {
-    from {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-    to {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideOutRight {
-    from {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    to {
-      transform: translateX(100%);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(style);
+/**
+ * Start the application when DOM is ready
+ */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+/**
+ * Export state for debugging (optional)
+ */
+window.__APP_STATE__ = state;

@@ -19,8 +19,10 @@
     "prefer-const": "error",
     "no-var": "error",
     "arrow-spacing": "error",
+    "object-curly-spacing": ["error", "always"],
+    "array-bracket-spacing": ["error", "never"],
+    "comma-dangle": ["error", "never"],
     "no-multiple-empty-lines": ["error", { "max": 1 }],
-    "eqeqeq": ["error", "always"],
-    "curly": ["error", "all"]
+    "eol-last": ["error", "always"]
   }
 }

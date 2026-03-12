@@ -1,15 +1,31 @@
 /**
- * Helper Utility Functions
+ * Utility Helper Functions
  * Common utility functions used throughout the application
  */
 
 /**
- * Debounce function to limit execution rate
- * @param {Function} func - Function to debounce
- * @param {number} wait - Wait time in milliseconds
+ * Format a date to a readable string
+ * @param {Date} date - The date to format
+ * @returns {string} Formatted date string
+ */
+export function formatDate(date) {
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  return new Intl.DateTimeFormat('en-US', options).format(date);
+}
+
+/**
+ * Debounce function - delays execution until after wait time has elapsed
+ * @param {Function} func - The function to debounce
+ * @param {number} wait - The delay in milliseconds
  * @returns {Function} Debounced function
  */
-export const debounce = (func, wait = 300) => {
+export function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
     const later = () => {
@@ -19,15 +35,15 @@ export const debounce = (func, wait = 300) => {
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
-};
+}
 
 /**
- * Throttle function to limit execution frequency
- * @param {Function} func - Function to throttle
- * @param {number} limit - Time limit in milliseconds
+ * Throttle function - limits execution to once per specified time period
+ * @param {Function} func - The function to throttle
+ * @param {number} limit - The time limit in milliseconds
  * @returns {Function} Throttled function
  */
-export const throttle = (func, limit = 300) => {
+export function throttle(func, limit) {
   let inThrottle;
   return function executedFunction(...args) {
     if (!inThrottle) {
@@ -36,37 +52,34 @@ export const throttle = (func, limit = 300) => {
       setTimeout(() => (inThrottle = false), limit);
     }
   };
-};
+}
 
 /**
- * Format a date object to a readable string
- * @param {Date} date - Date object to format
- * @param {string} locale - Locale string (default: 'en-US')
- * @returns {string} Formatted date string
+ * Generate a random ID
+ * @param {number} length - The length of the ID
+ * @returns {string} Random ID string
  */
-export const formatDate = (date, locale = 'en-US') => {
-  return new Intl.DateTimeFormat(locale, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date);
-};
+export function generateId(length = 8) {
+  return Math.random()
+    .toString(36)
+    .substring(2, length + 2);
+}
 
 /**
- * Generate a unique ID
- * @param {string} prefix - Optional prefix for the ID
- * @returns {string} Unique ID string
+ * Deep clone an object
+ * @param {Object} obj - The object to clone
+ * @returns {Object} Cloned object
  */
-export const generateId = (prefix = 'id') => {
-  return `${prefix}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-};
+export function deepClone(obj) {
+  return JSON.parse(JSON.stringify(obj));
+}
 
 /**
  * Check if an element is in viewport
- * @param {HTMLElement} element - Element to check
+ * @param {HTMLElement} element - The element to check
  * @returns {boolean} True if element is in viewport
  */
-export const isInViewport = element => {
+export function isInViewport(element) {
   const rect = element.getBoundingClientRect();
   return (
     rect.top >= 0 &&
@@ -75,87 +88,98 @@ export const isInViewport = element => {
       (window.innerHeight || document.documentElement.clientHeight) &&
     rect.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
-};
+}
 
 /**
- * Deep clone an object
- * @param {*} obj - Object to clone
- * @returns {*} Cloned object
- */
-export const deepClone = obj => {
-  return JSON.parse(JSON.stringify(obj));
-};
-
-/**
- * Capitalize first letter of a string
- * @param {string} str - String to capitalize
+ * Capitalize the first letter of a string
+ * @param {string} str - The string to capitalize
  * @returns {string} Capitalized string
  */
-export const capitalize = str => {
+export function capitalize(str) {
   if (typeof str !== 'string') return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
-};
+}
 
 /**
- * Get query parameters from URL
- * @returns {Object} Object containing query parameters
+ * Truncate a string to a specified length
+ * @param {string} str - The string to truncate
+ * @param {number} maxLength - Maximum length
+ * @returns {string} Truncated string
  */
-export const getQueryParams = () => {
-  const params = {};
-  const queryString = window.location.search.substring(1);
-  const pairs = queryString.split('&');
-
-  pairs.forEach(pair => {
-    const [key, value] = pair.split('=');
-    if (key) {
-      params[decodeURIComponent(key)] = decodeURIComponent(value || '');
-    }
-  });
-
-  return params;
-};
+export function truncate(str, maxLength) {
+  if (str.length <= maxLength) return str;
+  return str.slice(0, maxLength - 3) + '...';
+}
 
 /**
- * Local storage helper with JSON support
+ * Get a cookie value by name
+ * @param {string} name - The cookie name
+ * @returns {string|null} Cookie value or null
  */
-export const storage = {
-  get: key => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : null;
-    } catch (error) {
-      console.error('Error reading from localStorage:', error);
-      return null;
-    }
-  },
+export function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+  return null;
+}
 
-  set: (key, value) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (error) {
-      console.error('Error writing to localStorage:', error);
-      return false;
-    }
-  },
+/**
+ * Set a cookie
+ * @param {string} name - Cookie name
+ * @param {string} value - Cookie value
+ * @param {number} days - Expiration in days
+ */
+export function setCookie(name, value, days) {
+  let expires = '';
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = `; expires=${date.toUTCString()}`;
+  }
+  document.cookie = `${name}=${value || ''}${expires}; path=/`;
+}
 
-  remove: key => {
-    try {
-      localStorage.removeItem(key);
-      return true;
-    } catch (error) {
-      console.error('Error removing from localStorage:', error);
-      return false;
-    }
-  },
+/**
+ * Parse query string to object
+ * @param {string} queryString - The query string to parse
+ * @returns {Object} Parsed query parameters
+ */
+export function parseQueryString(queryString) {
+  const params = new URLSearchParams(queryString);
+  const result = {};
+  for (const [key, value] of params) {
+    result[key] = value;
+  }
+  return result;
+}
 
-  clear: () => {
-    try {
-      localStorage.clear();
-      return true;
-    } catch (error) {
-      console.error('Error clearing localStorage:', error);
-      return false;
-    }
-  },
-};
+/**
+ * Format number with commas
+ * @param {number} num - The number to format
+ * @returns {string} Formatted number string
+ */
+export function formatNumber(num) {
+  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+/**
+ * Sleep/delay function
+ * @param {number} ms - Milliseconds to sleep
+ * @returns {Promise} Promise that resolves after delay
+ */
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Check if value is empty (null, undefined, empty string, empty array, empty object)
+ * @param {*} value - The value to check
+ * @returns {boolean} True if empty
+ */
+export function isEmpty(value) {
+  if (value === null || value === undefined) return true;
+  if (typeof value === 'string' && value.trim() === '') return true;
+  if (Array.isArray(value) && value.length === 0) return true;
+  if (typeof value === 'object' && Object.keys(value).length === 0) return true;
+  return false;
+}

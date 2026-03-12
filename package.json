@@ -1,39 +1,35 @@
 {
   "name": "boilerplateloadingtest10000",
   "version": "1.0.0",
-  "description": "A production-ready boilerplate project using HTML, CSS, and JavaScript",
-  "main": "src/js/main.js",
+  "description": "A production-ready HTML, CSS, and JavaScript boilerplate project",
+  "main": "index.js",
   "scripts": {
-    "start": "npx http-server ./src -p 8080 -o",
-    "dev": "npx live-server ./src --port=8080",
-    "build": "npm run build:css && npm run build:js",
-    "build:css": "npx postcss src/css/styles.css -o dist/css/styles.min.css --use cssnano",
-    "build:js": "npx terser src/js/main.js -o dist/js/main.min.js --compress --mangle",
-    "lint": "npm run lint:js && npm run lint:css",
-    "lint:js": "npx eslint src/js/**/*.js",
-    "lint:css": "npx stylelint src/css/**/*.css",
+    "start": "npx serve src",
+    "dev": "npx live-server src",
+    "build": "npm run clean && npm run copy",
+    "clean": "rm -rf dist",
+    "copy": "mkdir -p dist && cp -r src/* dist/",
+    "lint": "npx eslint src/**/*.js",
+    "lint:fix": "npx eslint src/**/*.js --fix",
     "format": "npx prettier --write \"src/**/*.{html,css,js}\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format:check": "npx prettier --check \"src/**/*.{html,css,js}\""
   },
   "keywords": [
-    "boilerplate",
     "html",
     "css",
     "javascript",
-    "vanilla-js"
+    "boilerplate",
+    "frontend"
   ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "prettier": "^3.1.1",
-    "stylelint": "^16.1.0",
-    "stylelint-config-standard": "^36.0.0",
-    "postcss": "^8.4.32",
-    "postcss-cli": "^11.0.0",
-    "cssnano": "^6.0.2",
-    "terser": "^5.26.0",
-    "http-server": "^14.1.1",
-    "live-server": "^1.2.2"
+    "eslint": "^8.50.0",
+    "prettier": "^3.0.3",
+    "live-server": "^1.2.2",
+    "serve": "^14.2.1"
+  },
+  "engines": {
+    "node": ">=16.0.0"
   }
 }

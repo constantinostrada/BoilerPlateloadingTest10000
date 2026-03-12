@@ -1,4 +1,8 @@
-/* CSS Reset */
+/*
+ * CSS Reset
+ * Based on modern CSS reset practices
+ */
+
 /* Box sizing rules */
 *,
 *::before,
@@ -12,17 +16,13 @@
   padding: 0;
 }
 
-/* Remove list styles on ul, ol elements with a list role */
-ul[role='list'],
-ol[role='list'] {
+/* Remove list styles on ul, ol elements */
+ul,
+ol {
   list-style: none;
 }
 
 /* Set core root defaults */
-html {
-  scroll-behavior: smooth;
-}
-
 html:focus-within {
   scroll-behavior: smooth;
 }
@@ -30,13 +30,8 @@ html:focus-within {
 /* Set core body defaults */
 body {
   min-height: 100vh;
-  text-rendering: optimizespeed;
+  text-rendering: optimizeSpeed;
   line-height: 1.5;
-}
-
-/* A elements that don't have a class get default styles */
-a:not([class]) {
-  text-decoration-skip-ink: auto;
 }
 
 /* Make images easier to work with */
@@ -69,4 +64,17 @@ select {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Remove button styling */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Remove link styling */
+a {
+  text-decoration: none;
+  color: inherit;
 }
