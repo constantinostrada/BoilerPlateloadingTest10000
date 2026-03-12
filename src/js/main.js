@@ -1,132 +1,145 @@
 /**
  * Main JavaScript Entry Point
- * This file initializes the application and imports necessary modules
+ * BoilerPlateloadingTest10000
  */
 
-import { formatDate, debounce, throttle } from './utils/helpers.js';
+import { formatDate, debounce, addClass, removeClass } from './utils/helpers.js';
 
-/**
- * Application State
- */
-const state = {
-  isInitialized: false,
-  theme: 'light'
-};
+// DOM Elements
+const ctaButton = document.getElementById('cta-button');
+const contactForm = document.getElementById('contact-form');
+const currentYearElement = document.getElementById('current-year');
+const navLinks = document.querySelectorAll('.nav__link');
 
 /**
  * Initialize the application
  */
 function init() {
-  if (state.isInitialized) {
-    console.warn('Application already initialized');
-    return;
-  }
+  // Set current year in footer
+  setCurrentYear();
 
-  console.warn('Initializing BoilerPlateloadingTest10000...');
-
-  // Set up event listeners
+  // Setup event listeners
   setupEventListeners();
 
-  // Initialize components
-  initializeComponents();
+  // Smooth scroll for navigation
+  setupSmoothScroll();
 
-  // Mark as initialized
-  state.isInitialized = true;
-
-  console.warn('Application initialized successfully');
-  console.warn(`Current time: ${formatDate(new Date())}`);
+  // Log initialization
+  console.log('Application initialized successfully!');
 }
 
 /**
- * Set up event listeners
+ * Set current year in footer
+ */
+function setCurrentYear() {
+  if (currentYearElement) {
+    currentYearElement.textContent = new Date().getFullYear();
+  }
+}
+
+/**
+ * Setup all event listeners
  */
 function setupEventListeners() {
-  // CTA Button
-  const ctaButton = document.getElementById('ctaButton');
+  // CTA Button click
   if (ctaButton) {
     ctaButton.addEventListener('click', handleCtaClick);
   }
 
-  // Contact Form
-  const contactForm = document.getElementById('contactForm');
+  // Contact form submission
   if (contactForm) {
     contactForm.addEventListener('submit', handleFormSubmit);
   }
 
-  // Smooth scrolling for navigation links
-  const navLinks = document.querySelectorAll('.nav__link');
-  navLinks.forEach(link => {
-    link.addEventListener('click', handleSmoothScroll);
-  });
+  // Window scroll with debounce
+  window.addEventListener('scroll', debounce(handleScroll, 100));
 
-  // Window resize handler with debounce
+  // Window resize with debounce
   window.addEventListener('resize', debounce(handleResize, 250));
-
-  // Window scroll handler with throttle
-  window.addEventListener('scroll', throttle(handleScroll, 100));
-}
-
-/**
- * Initialize components
- */
-function initializeComponents() {
-  // Add active class to current section in navigation
-  updateActiveNavLink();
-
-  // Add animations on scroll (if elements are visible)
-  observeElements();
 }
 
 /**
  * Handle CTA button click
  */
-function handleCtaClick(event) {
-  event.preventDefault();
-  console.warn('CTA button clicked!');
-
-  // Scroll to features section
+function handleCtaClick() {
   const featuresSection = document.getElementById('features');
   if (featuresSection) {
     featuresSection.scrollIntoView({ behavior: 'smooth' });
   }
+  console.log('CTA button clicked!');
 }
 
 /**
- * Handle form submission
+ * Handle contact form submission
+ * @param {Event} event - Form submit event
  */
 function handleFormSubmit(event) {
   event.preventDefault();
 
-  const formData = new FormData(event.target);
-  const data = Object.fromEntries(formData);
+  const formData = new FormData(contactForm);
+  const data = {
+    name: formData.get('name'),
+    email: formData.get('email'),
+    message: formData.get('message'),
+  };
 
-  console.warn('Form submitted with data:', data);
+  console.log('Form submitted with data:', data);
 
   // Show success message
   alert('Thank you for your message! We will get back to you soon.');
 
   // Reset form
-  event.target.reset();
+  contactForm.reset();
 }
 
 /**
- * Handle smooth scrolling for navigation links
+ * Setup smooth scrolling for navigation links
  */
-function handleSmoothScroll(event) {
-  event.preventDefault();
+function setupSmoothScroll() {
+  navLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      const targetId = link.getAttribute('href').substring(1);
+      const targetElement = document.getElementById(targetId);
 
-  const targetId = event.currentTarget.getAttribute('href');
-  const targetSection = document.querySelector(targetId);
+      if (targetElement) {
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
 
-  if (targetSection) {
-    const headerOffset = 70;
-    const elementPosition = targetSection.getBoundingClientRect().top;
-    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-    window.scrollTo({
-      top: offsetPosition,
-      behavior: 'smooth'
+        // Update active state
+        updateActiveNavLink(link);
+      }
     });
+  });
+}
+
+/**
+ * Update active navigation link
+ * @param {HTMLElement} activeLink - The active link element
+ */
+function updateActiveNavLink(activeLink) {
+  navLinks.forEach(link => {
+    removeClass(link, 'active');
+  });
+  addClass(activeLink, 'active');
+}
+
+/**
+ * Handle window scroll
+ */
+function handleScroll() {
+  const scrollPosition = window.scrollY;
+
+  // Add/remove header shadow based on scroll position
+  const header = document.querySelector('.header');
+  if (header) {
+    if (scrollPosition > 50) {
+      addClass(header, 'scrolled');
+    } else {
+      removeClass(header, 'scrolled');
+    }
   }
 }
 
@@ -134,77 +147,37 @@ function handleSmoothScroll(event) {
  * Handle window resize
  */
 function handleResize() {
-  console.warn('Window resized:', {
-    width: window.innerWidth,
-    height: window.innerHeight
-  });
+  const width = window.innerWidth;
+  console.log('Window resized to:', width);
+  
+  // Add responsive logic here if needed
 }
 
 /**
- * Handle window scroll
+ * Example API call function
+ * @param {string} url - API endpoint
+ * @returns {Promise} - Promise with response data
  */
-function handleScroll() {
-  updateActiveNavLink();
-}
-
-/**
- * Update active navigation link based on scroll position
- */
-function updateActiveNavLink() {
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav__link');
-
-  let currentSection = '';
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-
-    if (window.pageYOffset >= sectionTop - 100) {
-      currentSection = section.getAttribute('id');
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  });
-
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href') === `#${currentSection}`) {
-      link.classList.add('active');
-    }
-  });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching data:', error);
+    throw error;
+  }
 }
 
-/**
- * Observe elements for intersection (scroll animations)
- */
-function observeElements() {
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, observerOptions);
-
-  // Observe feature cards
-  const featureCards = document.querySelectorAll('.feature-card');
-  featureCards.forEach(card => observer.observe(card));
-}
-
-/**
- * Start the application when DOM is ready
- */
+// Initialize the application when DOM is ready
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', init);
 } else {
   init();
 }
 
-/**
- * Export state for debugging (optional)
- */
-window.__APP_STATE__ = state;
+// Export functions for testing
+export { init, handleCtaClick, handleFormSubmit, fetchData };

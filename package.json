@@ -4,15 +4,18 @@
   "description": "A production-ready HTML, CSS, and JavaScript boilerplate project",
   "main": "index.js",
   "scripts": {
-    "start": "npx serve src",
-    "dev": "npx live-server src",
-    "build": "npm run clean && npm run copy",
-    "clean": "rm -rf dist",
-    "copy": "mkdir -p dist && cp -r src/* dist/",
-    "lint": "npx eslint src/**/*.js",
-    "lint:fix": "npx eslint src/**/*.js --fix",
+    "start": "npm run dev",
+    "dev": "npx live-server src --port=3000",
+    "build": "npm run clean && npm run copy && npm run minify:css && npm run minify:js",
+    "clean": "npx rimraf dist",
+    "copy": "npx copyfiles -u 1 \"src/**/*.html\" dist && npx copyfiles -u 1 \"src/assets/**/*\" dist",
+    "minify:css": "npx clean-css-cli -o dist/css/styles.min.css src/css/styles.css",
+    "minify:js": "npx terser src/js/main.js -o dist/js/main.min.js --compress --mangle",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:js": "npx eslint src/js/**/*.js",
+    "lint:css": "npx stylelint \"src/css/**/*.css\"",
     "format": "npx prettier --write \"src/**/*.{html,css,js}\"",
-    "format:check": "npx prettier --check \"src/**/*.{html,css,js}\""
+    "test": "npx jest"
   },
   "keywords": [
     "html",
@@ -24,12 +27,22 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "clean-css-cli": "^5.6.3",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.50.0",
-    "prettier": "^3.0.3",
+    "jest": "^29.7.0",
     "live-server": "^1.2.2",
-    "serve": "^14.2.1"
+    "prettier": "^3.0.3",
+    "rimraf": "^5.0.5",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0",
+    "terser": "^5.20.0"
   },
-  "engines": {
-    "node": ">=16.0.0"
-  }
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

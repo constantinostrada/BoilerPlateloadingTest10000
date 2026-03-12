@@ -1,111 +1,111 @@
 # BoilerPlateloadingTest10000
 
-A production-ready boilerplate for building web applications with HTML, CSS, and JavaScript.
+A production-ready boilerplate project built with HTML, CSS, and vanilla JavaScript. This project follows modern web development best practices and includes a complete development workflow.
 
-## 📋 Description
+## Features
 
-This project provides a clean, minimal but functional starter template for modern web development using vanilla HTML, CSS, and JavaScript. It includes proper configuration for linting, formatting, and development workflows.
+- 📦 Modern vanilla JavaScript (ES6+)
+- 🎨 Clean CSS architecture
+- 🔧 ESLint and Stylelint for code quality
+- 💅 Prettier for consistent code formatting
+- 🚀 Development server with live reload
+- 📦 Production build with minification
+- ✅ Jest for testing
+- 📱 Responsive design ready
 
-## 🚀 Features
-
-- Clean project structure
-- Modern JavaScript (ES6+)
-- Responsive CSS architecture
-- ESLint for code quality
-- Prettier for code formatting
-- Development server setup
-- Production-ready build process
-
-## 📦 Prerequisites
-
-- Node.js (>= 16.0.0)
-- npm or yarn
-
-## 🛠️ Setup Instructions
-
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
-
-2. **Start development server:**
-   ```bash
-   npm run dev
-   ```
-   This will start a live-server at `http://localhost:8080`
-
-   Alternatively, you can use:
-   ```bash
-   npm start
-   ```
-   This will serve the app using the `serve` package.
-
-3. **Build for production:**
-   ```bash
-   npm run build
-   ```
-   This will create a `dist` folder with production-ready files.
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 .
 ├── src/
 │   ├── index.html          # Main HTML file
 │   ├── css/
-│   │   ├── main.css        # Main stylesheet
-│   │   ├── variables.css   # CSS custom properties
-│   │   └── reset.css       # CSS reset/normalize
+│   │   ├── styles.css      # Main stylesheet
+│   │   ├── reset.css       # CSS reset
+│   │   └── variables.css   # CSS custom properties
 │   ├── js/
 │   │   ├── main.js         # Main JavaScript entry point
 │   │   └── utils/
 │   │       └── helpers.js  # Utility functions
 │   └── assets/
 │       └── images/         # Image assets
-├── .eslintrc.json          # ESLint configuration
-├── .prettierrc             # Prettier configuration
-├── .gitignore              # Git ignore rules
-├── package.json            # Project dependencies and scripts
-└── README.md               # Project documentation
+├── tests/                  # Test files
+├── dist/                   # Production build (generated)
+└── package.json
 ```
 
-## 🧰 Available Scripts
+## Getting Started
 
-- `npm start` - Serve the application using `serve`
-- `npm run dev` - Start development server with live reload
-- `npm run build` - Build the project for production
-- `npm run clean` - Remove the dist folder
-- `npm run lint` - Lint JavaScript files
-- `npm run lint:fix` - Lint and auto-fix JavaScript files
-- `npm run format` - Format all files with Prettier
-- `npm run format:check` - Check formatting without making changes
+### Prerequisites
 
-## 🎨 Development
+- Node.js (v14 or higher)
+- npm or yarn
 
-The project follows a modular structure:
+### Installation
 
-- **HTML**: Semantic HTML5 markup in `src/index.html`
-- **CSS**: Organized stylesheets in `src/css/` with CSS custom properties for theming
-- **JavaScript**: Modern ES6+ modules in `src/js/`
+1. Install dependencies:
+```bash
+npm install
+```
 
-## 🔧 Configuration
+### Development
 
-### ESLint
+Start the development server:
+```bash
+npm run dev
+```
 
-ESLint is configured for modern JavaScript. Customize rules in `.eslintrc.json`.
+This will start a local development server at `http://localhost:3000` with live reload.
 
-### Prettier
+### Building for Production
 
-Code formatting rules can be adjusted in `.prettierrc`.
+Create an optimized production build:
+```bash
+npm run build
+```
 
-## 📝 License
+The optimized files will be in the `dist/` directory.
+
+### Code Quality
+
+Run linting:
+```bash
+npm run lint
+```
+
+Format code:
+```bash
+npm run format
+```
+
+### Testing
+
+Run tests:
+```bash
+npm test
+```
+
+## Scripts
+
+- `npm start` - Start development server
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run lint` - Run ESLint and Stylelint
+- `npm run format` - Format code with Prettier
+- `npm test` - Run tests with Jest
+
+## Browser Support
+
+Supports all modern browsers:
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## License
 
 MIT License - feel free to use this project for personal or commercial purposes.
 
-## 🤝 Contributing
+## Contributing
 
-Contributions, issues, and feature requests are welcome!
-
----
-
-**Happy Coding!** 🎉
+Contributions are welcome! Please feel free to submit a Pull Request.

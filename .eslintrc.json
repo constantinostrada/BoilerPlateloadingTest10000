@@ -2,7 +2,8 @@
   "env": {
     "browser": true,
     "es2021": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": "eslint:recommended",
   "parserOptions": {
@@ -16,13 +17,8 @@
     "semi": ["error", "always"],
     "no-unused-vars": ["warn"],
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "prefer-const": "error",
-    "no-var": "error",
-    "arrow-spacing": "error",
-    "object-curly-spacing": ["error", "always"],
-    "array-bracket-spacing": ["error", "never"],
-    "comma-dangle": ["error", "never"],
-    "no-multiple-empty-lines": ["error", { "max": 1 }],
-    "eol-last": ["error", "always"]
+    "prefer-const": ["error"],
+    "arrow-spacing": ["error"],
+    "no-var": ["error"]
   }
 }

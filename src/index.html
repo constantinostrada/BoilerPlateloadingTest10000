@@ -1,181 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="description"
-      content="BoilerPlateloadingTest10000 - A production-ready HTML, CSS, and JavaScript boilerplate"
-    />
-    <meta name="author" content="" />
-    <meta name="keywords" content="html, css, javascript, boilerplate" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="BoilerPlateloadingTest10000" />
-    <meta
-      property="og:description"
-      content="A production-ready HTML, CSS, and JavaScript boilerplate"
-    />
-    
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="BoilerPlateloadingTest10000" />
-    <meta
-      name="twitter:description"
-      content="A production-ready HTML, CSS, and JavaScript boilerplate"
-    />
-    
-    <title>BoilerPlateloadingTest10000</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-    
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="css/reset.css" />
-    <link rel="stylesheet" href="css/variables.css" />
-    <link rel="stylesheet" href="css/main.css" />
-  </head>
-  <body>
-    <!-- Header -->
-    <header class="header">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="BoilerPlateloadingTest10000 - A modern web application">
+  <meta name="keywords" content="html, css, javascript, boilerplate">
+  <meta name="author" content="">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/styles.css">
+  
+  <title>BoilerPlateloadingTest10000</title>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
       <div class="container">
-        <nav class="nav">
-          <div class="nav__logo">
-            <h1>BoilerPlateloadingTest10000</h1>
-          </div>
-          <ul class="nav__menu">
-            <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
-            <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-            <li class="nav__item"><a href="#features" class="nav__link">Features</a></li>
-            <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
-          </ul>
-        </nav>
+        <div class="nav__brand">
+          <h1>BoilerPlateloadingTest10000</h1>
+        </div>
+        <ul class="nav__menu">
+          <li class="nav__item"><a href="#home" class="nav__link">Home</a></li>
+          <li class="nav__item"><a href="#features" class="nav__link">Features</a></li>
+          <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
+          <li class="nav__item"><a href="#contact" class="nav__link">Contact</a></li>
+        </ul>
       </div>
-    </header>
+    </nav>
+  </header>
 
-    <!-- Main Content -->
-    <main class="main">
-      <!-- Hero Section -->
-      <section id="home" class="hero">
-        <div class="container">
-          <div class="hero__content">
-            <h2 class="hero__title">Welcome to BoilerPlateloadingTest10000</h2>
-            <p class="hero__description">
-              A production-ready boilerplate for building modern web applications
-              with HTML, CSS, and JavaScript.
-            </p>
-            <button class="btn btn--primary" id="ctaButton">Get Started</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Features Section -->
-      <section id="features" class="features">
-        <div class="container">
-          <h2 class="section__title">Features</h2>
-          <div class="features__grid">
-            <div class="feature-card">
-              <div class="feature-card__icon">⚡</div>
-              <h3 class="feature-card__title">Fast & Lightweight</h3>
-              <p class="feature-card__description">
-                Optimized for performance with minimal dependencies.
-              </p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-card__icon">🎨</div>
-              <h3 class="feature-card__title">Modern Design</h3>
-              <p class="feature-card__description">
-                Clean and responsive design that works on all devices.
-              </p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-card__icon">🛠️</div>
-              <h3 class="feature-card__title">Developer Friendly</h3>
-              <p class="feature-card__description">
-                Includes ESLint, Prettier, and development tools.
-              </p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-card__icon">📦</div>
-              <h3 class="feature-card__title">Production Ready</h3>
-              <p class="feature-card__description">
-                Build scripts and optimizations included out of the box.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- About Section -->
-      <section id="about" class="about">
-        <div class="container">
-          <h2 class="section__title">About</h2>
-          <div class="about__content">
-            <p>
-              This boilerplate provides a solid foundation for your web projects.
-              It follows best practices and modern web development standards.
-            </p>
-            <p>
-              Built with vanilla HTML, CSS, and JavaScript, it gives you full
-              control without the overhead of heavy frameworks.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section id="contact" class="contact">
-        <div class="container">
-          <h2 class="section__title">Contact</h2>
-          <form class="contact-form" id="contactForm">
-            <div class="form-group">
-              <label for="name" class="form-label">Name</label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                class="form-input"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="email" class="form-label">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                class="form-input"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="message" class="form-label">Message</label>
-              <textarea
-                id="message"
-                name="message"
-                class="form-input form-textarea"
-                rows="5"
-                required
-              ></textarea>
-            </div>
-            <button type="submit" class="btn btn--primary">Send Message</button>
-          </form>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
+  <!-- Main Content -->
+  <main class="main">
+    <!-- Hero Section -->
+    <section id="home" class="hero">
       <div class="container">
-        <p class="footer__text">
-          &copy; 2024 BoilerPlateloadingTest10000. All rights reserved.
+        <div class="hero__content">
+          <h2 class="hero__title">Welcome to BoilerPlateloadingTest10000</h2>
+          <p class="hero__description">
+            A modern, production-ready boilerplate built with HTML, CSS, and vanilla JavaScript.
+          </p>
+          <button class="btn btn--primary" id="cta-button">Get Started</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+      <div class="container">
+        <h2 class="section__title">Features</h2>
+        <div class="features__grid">
+          <div class="feature-card">
+            <div class="feature-card__icon">🚀</div>
+            <h3 class="feature-card__title">Fast & Modern</h3>
+            <p class="feature-card__description">
+              Built with modern web standards and optimized for performance.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">📱</div>
+            <h3 class="feature-card__title">Responsive</h3>
+            <p class="feature-card__description">
+              Works seamlessly across all devices and screen sizes.
+            </p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">🎨</div>
+            <h3 class="feature-card__title">Customizable</h3>
+            <p class="feature-card__description">
+              Easy to customize with CSS variables and modular structure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="container">
+        <h2 class="section__title">About This Project</h2>
+        <p class="about__text">
+          This is a production-ready boilerplate project that follows modern web development
+          best practices. It includes a complete development workflow with linting, formatting,
+          testing, and build optimization.
         </p>
       </div>
-    </footer>
+    </section>
 
-    <!-- Scripts -->
-    <script src="js/main.js" type="module"></script>
-  </body>
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <h2 class="section__title">Get In Touch</h2>
+        <form class="contact__form" id="contact-form">
+          <div class="form__group">
+            <label for="name" class="form__label">Name</label>
+            <input type="text" id="name" name="name" class="form__input" required>
+          </div>
+          <div class="form__group">
+            <label for="email" class="form__label">Email</label>
+            <input type="email" id="email" name="email" class="form__input" required>
+          </div>
+          <div class="form__group">
+            <label for="message" class="form__label">Message</label>
+            <textarea id="message" name="message" class="form__textarea" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p class="footer__text">
+        &copy; <span id="current-year"></span> BoilerPlateloadingTest10000. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/main.js" type="module"></script>
+</body>
 </html>

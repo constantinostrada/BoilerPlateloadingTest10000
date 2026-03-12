@@ -1,31 +1,28 @@
 /**
  * Utility Helper Functions
- * Common utility functions used throughout the application
  */
 
 /**
  * Format a date to a readable string
- * @param {Date} date - The date to format
+ * @param {Date} date - Date object to format
+ * @param {string} locale - Locale string (default: 'en-US')
  * @returns {string} Formatted date string
  */
-export function formatDate(date) {
-  const options = {
+export function formatDate(date, locale = 'en-US') {
+  return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  };
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+  }).format(date);
 }
 
 /**
- * Debounce function - delays execution until after wait time has elapsed
- * @param {Function} func - The function to debounce
- * @param {number} wait - The delay in milliseconds
+ * Debounce function to limit execution rate
+ * @param {Function} func - Function to debounce
+ * @param {number} wait - Wait time in milliseconds
  * @returns {Function} Debounced function
  */
-export function debounce(func, wait) {
+export function debounce(func, wait = 300) {
   let timeout;
   return function executedFunction(...args) {
     const later = () => {
@@ -38,36 +35,181 @@ export function debounce(func, wait) {
 }
 
 /**
- * Throttle function - limits execution to once per specified time period
- * @param {Function} func - The function to throttle
- * @param {number} limit - The time limit in milliseconds
+ * Throttle function to limit execution frequency
+ * @param {Function} func - Function to throttle
+ * @param {number} limit - Minimum time between executions
  * @returns {Function} Throttled function
  */
-export function throttle(func, limit) {
+export function throttle(func, limit = 300) {
   let inThrottle;
   return function executedFunction(...args) {
     if (!inThrottle) {
       func.apply(this, args);
       inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
+      setTimeout(() => {
+        inThrottle = false;
+      }, limit);
     }
   };
 }
 
 /**
- * Generate a random ID
- * @param {number} length - The length of the ID
+ * Add class to element
+ * @param {HTMLElement} element - DOM element
+ * @param {string} className - Class name to add
+ */
+export function addClass(element, className) {
+  if (element && className) {
+    element.classList.add(className);
+  }
+}
+
+/**
+ * Remove class from element
+ * @param {HTMLElement} element - DOM element
+ * @param {string} className - Class name to remove
+ */
+export function removeClass(element, className) {
+  if (element && className) {
+    element.classList.remove(className);
+  }
+}
+
+/**
+ * Toggle class on element
+ * @param {HTMLElement} element - DOM element
+ * @param {string} className - Class name to toggle
+ */
+export function toggleClass(element, className) {
+  if (element && className) {
+    element.classList.toggle(className);
+  }
+}
+
+/**
+ * Check if element has class
+ * @param {HTMLElement} element - DOM element
+ * @param {string} className - Class name to check
+ * @returns {boolean} True if element has class
+ */
+export function hasClass(element, className) {
+  return element && className ? element.classList.contains(className) : false;
+}
+
+/**
+ * Get element by selector
+ * @param {string} selector - CSS selector
+ * @param {HTMLElement} parent - Parent element (default: document)
+ * @returns {HTMLElement|null} Found element or null
+ */
+export function getElement(selector, parent = document) {
+  return parent.querySelector(selector);
+}
+
+/**
+ * Get all elements by selector
+ * @param {string} selector - CSS selector
+ * @param {HTMLElement} parent - Parent element (default: document)
+ * @returns {NodeList} NodeList of found elements
+ */
+export function getAllElements(selector, parent = document) {
+  return parent.querySelectorAll(selector);
+}
+
+/**
+ * Create element with attributes and content
+ * @param {string} tag - HTML tag name
+ * @param {Object} attributes - Object with element attributes
+ * @param {string} content - Inner HTML content
+ * @returns {HTMLElement} Created element
+ */
+export function createElement(tag, attributes = {}, content = '') {
+  const element = document.createElement(tag);
+
+  Object.keys(attributes).forEach(key => {
+    if (key === 'className') {
+      element.className = attributes[key];
+    } else if (key === 'dataset') {
+      Object.keys(attributes[key]).forEach(dataKey => {
+        element.dataset[dataKey] = attributes[key][dataKey];
+      });
+    } else {
+      element.setAttribute(key, attributes[key]);
+    }
+  });
+
+  if (content) {
+    element.innerHTML = content;
+  }
+
+  return element;
+}
+
+/**
+ * Local storage helper - set item
+ * @param {string} key - Storage key
+ * @param {*} value - Value to store (will be JSON stringified)
+ */
+export function setLocalStorage(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error('Error setting localStorage:', error);
+  }
+}
+
+/**
+ * Local storage helper - get item
+ * @param {string} key - Storage key
+ * @returns {*} Parsed value or null
+ */
+export function getLocalStorage(key) {
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (error) {
+    console.error('Error getting localStorage:', error);
+    return null;
+  }
+}
+
+/**
+ * Local storage helper - remove item
+ * @param {string} key - Storage key
+ */
+export function removeLocalStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error('Error removing localStorage:', error);
+  }
+}
+
+/**
+ * Generate random ID
+ * @param {number} length - Length of ID
  * @returns {string} Random ID string
  */
 export function generateId(length = 8) {
   return Math.random()
     .toString(36)
-    .substring(2, length + 2);
+    .substring(2, 2 + length);
 }
 
 /**
- * Deep clone an object
- * @param {Object} obj - The object to clone
+ * Sanitize HTML string
+ * @param {string} str - String to sanitize
+ * @returns {string} Sanitized string
+ */
+export function sanitizeHTML(str) {
+  const temp = document.createElement('div');
+  temp.textContent = str;
+  return temp.innerHTML;
+}
+
+/**
+ * Deep clone object
+ * @param {Object} obj - Object to clone
  * @returns {Object} Cloned object
  */
 export function deepClone(obj) {
@@ -75,111 +217,16 @@ export function deepClone(obj) {
 }
 
 /**
- * Check if an element is in viewport
- * @param {HTMLElement} element - The element to check
- * @returns {boolean} True if element is in viewport
- */
-export function isInViewport(element) {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-}
-
-/**
- * Capitalize the first letter of a string
- * @param {string} str - The string to capitalize
- * @returns {string} Capitalized string
- */
-export function capitalize(str) {
-  if (typeof str !== 'string') return '';
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-/**
- * Truncate a string to a specified length
- * @param {string} str - The string to truncate
- * @param {number} maxLength - Maximum length
- * @returns {string} Truncated string
- */
-export function truncate(str, maxLength) {
-  if (str.length <= maxLength) return str;
-  return str.slice(0, maxLength - 3) + '...';
-}
-
-/**
- * Get a cookie value by name
- * @param {string} name - The cookie name
- * @returns {string|null} Cookie value or null
- */
-export function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-}
-
-/**
- * Set a cookie
- * @param {string} name - Cookie name
- * @param {string} value - Cookie value
- * @param {number} days - Expiration in days
- */
-export function setCookie(name, value, days) {
-  let expires = '';
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = `; expires=${date.toUTCString()}`;
-  }
-  document.cookie = `${name}=${value || ''}${expires}; path=/`;
-}
-
-/**
- * Parse query string to object
- * @param {string} queryString - The query string to parse
- * @returns {Object} Parsed query parameters
- */
-export function parseQueryString(queryString) {
-  const params = new URLSearchParams(queryString);
-  const result = {};
-  for (const [key, value] of params) {
-    result[key] = value;
-  }
-  return result;
-}
-
-/**
- * Format number with commas
- * @param {number} num - The number to format
- * @returns {string} Formatted number string
- */
-export function formatNumber(num) {
-  return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
-/**
- * Sleep/delay function
- * @param {number} ms - Milliseconds to sleep
- * @returns {Promise} Promise that resolves after delay
- */
-export function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-/**
- * Check if value is empty (null, undefined, empty string, empty array, empty object)
- * @param {*} value - The value to check
+ * Check if value is empty
+ * @param {*} value - Value to check
  * @returns {boolean} True if empty
  */
 export function isEmpty(value) {
-  if (value === null || value === undefined) return true;
-  if (typeof value === 'string' && value.trim() === '') return true;
-  if (Array.isArray(value) && value.length === 0) return true;
-  if (typeof value === 'object' && Object.keys(value).length === 0) return true;
-  return false;
+  return (
+    value === null ||
+    value === undefined ||
+    value === '' ||
+    (Array.isArray(value) && value.length === 0) ||
+    (typeof value === 'object' && Object.keys(value).length === 0)
+  );
 }

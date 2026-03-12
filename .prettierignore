@@ -1,16 +1,7 @@
-# Dependencies
 node_modules/
-
-# Build outputs
 dist/
 build/
-
-# Logs
-*.log
-
-# OS files
-.DS_Store
-
-# Lock files
+coverage/
+*.min.js
+*.min.css
 package-lock.json
-yarn.lock

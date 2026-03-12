@@ -1,13 +1,15 @@
 module.exports = {
   testEnvironment: 'jsdom',
-  testMatch: ['**/tests/**/*.test.js'],
+  coverageDirectory: 'coverage',
   collectCoverageFrom: [
     'src/js/**/*.js',
     '!src/js/**/*.test.js',
-    '!node_modules/**'
+    '!src/js/**/*.spec.js',
   ],
-  coverageDirectory: 'coverage',
-  coverageReporters: ['text', 'lcov', 'html'],
+  testMatch: [
+    '**/tests/**/*.test.js',
+    '**/tests/**/*.spec.js',
+  ],
+  moduleFileExtensions: ['js', 'json'],
   verbose: true,
-  setupFilesAfterEnv: ['<rootDir>/tests/setup.js']
 };
