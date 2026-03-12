@@ -16,10 +16,11 @@
     "semi": ["error", "always"],
     "no-unused-vars": ["warn"],
     "no-console": ["warn", { "allow": ["warn", "error"] }],
-    "no-var": "error",
     "prefer-const": "error",
-    "prefer-arrow-callback": "error",
+    "no-var": "error",
     "arrow-spacing": "error",
-    "no-duplicate-imports": "error"
+    "no-multiple-empty-lines": ["error", { "max": 1 }],
+    "eqeqeq": ["error", "always"],
+    "curly": ["error", "all"]
   }
 }

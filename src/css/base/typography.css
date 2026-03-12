@@ -1,6 +1,4 @@
-/* ==========================================================================
-   Typography
-   ========================================================================== */
+/* Typography */
 
 h1,
 h2,
@@ -8,45 +6,46 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-heading);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-text);
-  margin-bottom: var(--spacing-md);
+  margin-bottom: var(--spacing-4);
 }
 
 h1 {
-  font-size: var(--font-size-xxxl);
+  font-size: var(--font-size-4xl);
 }
 
 h2 {
-  font-size: var(--font-size-xxl);
+  font-size: var(--font-size-3xl);
 }
 
 h3 {
-  font-size: var(--font-size-xl);
+  font-size: var(--font-size-2xl);
 }
 
 h4 {
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
 }
 
 h5 {
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-lg);
 }
 
 h6 {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-base);
 }
 
 p {
-  margin-bottom: var(--spacing-md);
-  line-height: var(--line-height-base);
+  margin-bottom: var(--spacing-4);
+  color: var(--color-text-light);
+  line-height: var(--line-height-relaxed);
 }
 
 a {
   color: var(--color-primary);
-  transition: color var(--transition-fast);
+  text-decoration: none;
+  transition: color var(--transition-base);
 }
 
 a:hover {
@@ -68,24 +67,27 @@ small {
 }
 
 code {
-  font-family: var(--font-family-mono);
-  font-size: 0.9em;
-  padding: 0.125rem 0.25rem;
-  background-color: var(--color-gray-light);
-  border-radius: var(--border-radius-sm);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-1) var(--spacing-2);
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-sm);
 }
 
 pre {
-  font-family: var(--font-family-mono);
-  padding: var(--spacing-md);
-  background-color: var(--color-gray-light);
-  border-radius: var(--border-radius);
+  font-family: var(--font-mono);
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-4);
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-base);
   overflow-x: auto;
+  margin-bottom: var(--spacing-4);
 }
 
 blockquote {
-  padding-left: var(--spacing-lg);
   border-left: 4px solid var(--color-primary);
+  padding-left: var(--spacing-4);
+  margin: var(--spacing-4) 0;
   font-style: italic;
   color: var(--color-text-light);
 }

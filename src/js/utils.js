@@ -1,205 +1,276 @@
 /**
  * Utility Functions
- * Collection of reusable helper functions
+ * BoilerPlateloadingTest10000
  */
 
+'use strict';
+
 /**
- * Debounce function to limit rate of function execution
+ * Debounce function to limit the rate at which a function can fire
  * @param {Function} func - Function to debounce
  * @param {number} wait - Wait time in milliseconds
- * @returns {Function} Debounced function
+ * @returns {Function} - Debounced function
  */
-const debounce = (func, wait = 300) => {
+function debounce(func, wait = 300) {
   let timeout;
+
   return function executedFunction(...args) {
     const later = () => {
       clearTimeout(timeout);
       func(...args);
     };
+
     clearTimeout(timeout);
     timeout = setTimeout(later, wait);
   };
-};
+}
 
 /**
- * Throttle function to limit function execution frequency
+ * Throttle function to limit how often a function can be called
  * @param {Function} func - Function to throttle
  * @param {number} limit - Time limit in milliseconds
- * @returns {Function} Throttled function
+ * @returns {Function} - Throttled function
  */
-const throttle = (func, limit = 300) => {
+function throttle(func, limit = 300) {
   let inThrottle;
+
   return function executedFunction(...args) {
     if (!inThrottle) {
-      func.apply(this, args);
+      func(...args);
       inThrottle = true;
       setTimeout(() => {
         inThrottle = false;
       }, limit);
     }
   };
-};
+}
 
 /**
- * Select DOM element
- * @param {string} selector - CSS selector
- * @param {Element} parent - Parent element (optional)
- * @returns {Element|null} Selected element
+ * Validate email address
+ * @param {string} email - Email address to validate
+ * @returns {boolean} - Validation result
  */
-const select = (selector, parent = document) => parent.querySelector(selector);
+function validateEmail(email) {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(String(email).toLowerCase());
+}
 
 /**
- * Select all DOM elements
- * @param {string} selector - CSS selector
- * @param {Element} parent - Parent element (optional)
- * @returns {NodeList} List of selected elements
+ * Format date to locale string
+ * @param {Date|string|number} date - Date to format
+ * @param {string} locale - Locale string (default: 'en-US')
+ * @returns {string} - Formatted date string
  */
-const selectAll = (selector, parent = document) =>
-  parent.querySelectorAll(selector);
-
-/**
- * Add event listener to element(s)
- * @param {Element|NodeList} element - Element(s) to attach listener to
- * @param {string} event - Event type
- * @param {Function} handler - Event handler function
- */
-const on = (element, event, handler) => {
-  if (element instanceof NodeList) {
-    element.forEach(el => el.addEventListener(event, handler));
-  } else {
-    element.addEventListener(event, handler);
-  }
-};
-
-/**
- * Remove event listener from element(s)
- * @param {Element|NodeList} element - Element(s) to remove listener from
- * @param {string} event - Event type
- * @param {Function} handler - Event handler function
- */
-const off = (element, event, handler) => {
-  if (element instanceof NodeList) {
-    element.forEach(el => el.removeEventListener(event, handler));
-  } else {
-    element.removeEventListener(event, handler);
-  }
-};
-
-/**
- * Create a new DOM element with attributes
- * @param {string} tag - HTML tag name
- * @param {Object} attributes - Element attributes
- * @returns {Element} Created element
- */
-const createElement = (tag, attributes = {}) => {
-  const element = document.createElement(tag);
-  Object.entries(attributes).forEach(([key, value]) => {
-    if (key === 'class') {
-      element.className = value;
-    } else if (key === 'text') {
-      element.textContent = value;
-    } else if (key === 'html') {
-      element.innerHTML = value;
-    } else {
-      element.setAttribute(key, value);
-    }
-  });
-  return element;
-};
-
-/**
- * Format date to readable string
- * @param {Date|string} date - Date to format
- * @returns {string} Formatted date string
- */
-const formatDate = date => {
-  const d = new Date(date);
-  return d.toLocaleDateString('en-US', {
+function formatDate(date, locale = 'en-US') {
+  const dateObj = new Date(date);
+  return dateObj.toLocaleDateString(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-};
+}
 
 /**
- * Generate unique ID
- * @returns {string} Unique ID
+ * Deep clone an object
+ * @param {Object} obj - Object to clone
+ * @returns {Object} - Cloned object
  */
-const generateId = () =>
-  `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-
-/**
- * Smooth scroll to element
- * @param {string|Element} target - Target element or selector
- * @param {number} offset - Offset from top (optional)
- */
-const scrollToElement = (target, offset = 0) => {
-  const element =
-    typeof target === 'string' ? select(target) : target;
-  if (element) {
-    const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
-    window.scrollTo({
-      top,
-      behavior: 'smooth',
-    });
+function deepClone(obj) {
+  if (obj === null || typeof obj !== 'object') {
+    return obj;
   }
-};
+
+  if (obj instanceof Date) {
+    return new Date(obj.getTime());
+  }
+
+  if (obj instanceof Array) {
+    return obj.map(item => deepClone(item));
+  }
+
+  if (obj instanceof Object) {
+    const clonedObj = {};
+    for (const key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        clonedObj[key] = deepClone(obj[key]);
+      }
+    }
+    return clonedObj;
+  }
+}
 
 /**
- * Check if element is in viewport
- * @param {Element} element - Element to check
- * @returns {boolean} True if element is in viewport
+ * Get element by ID with error handling
+ * @param {string} id - Element ID
+ * @returns {HTMLElement|null} - Element or null
  */
-const isInViewport = element => {
-  const rect = element.getBoundingClientRect();
-  return (
-    rect.top >= 0 &&
-    rect.left >= 0 &&
-    rect.bottom <=
-      (window.innerHeight || document.documentElement.clientHeight) &&
-    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-  );
-};
+function getElement(id) {
+  const element = document.getElementById(id);
+  if (!element) {
+    console.warn(`Element with id "${id}" not found`);
+  }
+  return element;
+}
+
+/**
+ * Get elements by selector with error handling
+ * @param {string} selector - CSS selector
+ * @param {HTMLElement} context - Context element (default: document)
+ * @returns {NodeList} - NodeList of elements
+ */
+function getElements(selector, context = document) {
+  const elements = context.querySelectorAll(selector);
+  if (elements.length === 0) {
+    console.warn(`No elements found with selector "${selector}"`);
+  }
+  return elements;
+}
+
+/**
+ * Add class to element
+ * @param {HTMLElement} element - Target element
+ * @param {string|string[]} className - Class name(s) to add
+ */
+function addClass(element, className) {
+  if (!element) {
+    return;
+  }
+
+  if (Array.isArray(className)) {
+    element.classList.add(...className);
+  } else {
+    element.classList.add(className);
+  }
+}
+
+/**
+ * Remove class from element
+ * @param {HTMLElement} element - Target element
+ * @param {string|string[]} className - Class name(s) to remove
+ */
+function removeClass(element, className) {
+  if (!element) {
+    return;
+  }
+
+  if (Array.isArray(className)) {
+    element.classList.remove(...className);
+  } else {
+    element.classList.remove(className);
+  }
+}
+
+/**
+ * Toggle class on element
+ * @param {HTMLElement} element - Target element
+ * @param {string} className - Class name to toggle
+ */
+function toggleClass(element, className) {
+  if (!element) {
+    return;
+  }
+
+  element.classList.toggle(className);
+}
+
+/**
+ * Check if element has class
+ * @param {HTMLElement} element - Target element
+ * @param {string} className - Class name to check
+ * @returns {boolean} - True if element has class
+ */
+function hasClass(element, className) {
+  if (!element) {
+    return false;
+  }
+
+  return element.classList.contains(className);
+}
 
 /**
  * Local storage helper functions
  */
 const storage = {
-  get: key => {
+  /**
+   * Set item in local storage
+   * @param {string} key - Storage key
+   * @param {*} value - Value to store (will be JSON stringified)
+   */
+  set(key, value) {
     try {
-      return JSON.parse(localStorage.getItem(key));
-    } catch (e) {
-      return null;
+      const serializedValue = JSON.stringify(value);
+      localStorage.setItem(key, serializedValue);
+    } catch (error) {
+      console.error('Error saving to localStorage:', error);
     }
   },
-  set: (key, value) => {
+
+  /**
+   * Get item from local storage
+   * @param {string} key - Storage key
+   * @param {*} defaultValue - Default value if key not found
+   * @returns {*} - Parsed value or default value
+   */
+  get(key, defaultValue = null) {
     try {
-      localStorage.setItem(key, JSON.stringify(value));
-      return true;
-    } catch (e) {
-      return false;
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultValue;
+    } catch (error) {
+      console.error('Error reading from localStorage:', error);
+      return defaultValue;
     }
   },
-  remove: key => localStorage.removeItem(key),
-  clear: () => localStorage.clear(),
+
+  /**
+   * Remove item from local storage
+   * @param {string} key - Storage key
+   */
+  remove(key) {
+    try {
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.error('Error removing from localStorage:', error);
+    }
+  },
+
+  /**
+   * Clear all items from local storage
+   */
+  clear() {
+    try {
+      localStorage.clear();
+    } catch (error) {
+      console.error('Error clearing localStorage:', error);
+    }
+  },
 };
 
 /**
- * Export utility functions
+ * Generate random ID
+ * @param {number} length - Length of ID
+ * @returns {string} - Random ID
  */
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = {
-    debounce,
-    throttle,
-    select,
-    selectAll,
-    on,
-    off,
-    createElement,
-    formatDate,
-    generateId,
-    scrollToElement,
-    isInViewport,
-    storage,
-  };
+function generateId(length = 16) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+/**
+ * Check if user prefers dark mode
+ * @returns {boolean} - True if user prefers dark mode
+ */
+function prefersDarkMode() {
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+}
+
+/**
+ * Check if user prefers reduced motion
+ * @returns {boolean} - True if user prefers reduced motion
+ */
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }

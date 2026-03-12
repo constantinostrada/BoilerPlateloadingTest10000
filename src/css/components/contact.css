@@ -1,0 +1,64 @@
+/* Contact Section Styles */
+
+.contact {
+  padding: var(--spacing-16) 0;
+  background-color: var(--color-background);
+}
+
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-6);
+}
+
+.form-label {
+  display: block;
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--spacing-2);
+  color: var(--color-text);
+  font-size: var(--font-size-base);
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  font-size: var(--font-size-base);
+  font-family: var(--font-primary);
+  color: var(--color-text);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-gray-400);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form .btn {
+  width: 100%;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .contact {
+    padding: var(--spacing-12) 0;
+  }
+}

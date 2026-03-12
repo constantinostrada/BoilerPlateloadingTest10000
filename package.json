@@ -1,45 +1,39 @@
 {
   "name": "boilerplateloadingtest10000",
   "version": "1.0.0",
-  "description": "A modern HTML, CSS, and JavaScript boilerplate project",
-  "main": "src/js/index.js",
+  "description": "A production-ready boilerplate project using HTML, CSS, and JavaScript",
+  "main": "src/js/main.js",
   "scripts": {
-    "start": "npx live-server public --port=8080",
-    "dev": "npx live-server public --port=8080 --watch=src",
-    "build": "npm run clean && npm run copy && npm run minify:css && npm run minify:js",
-    "clean": "npx rimraf dist",
-    "copy": "npx copyfiles -u 1 'public/**/*' dist && npx copyfiles -u 1 'src/**/*.html' dist",
-    "minify:css": "npx clean-css-cli -o dist/css/styles.min.css src/css/styles.css",
-    "minify:js": "npx terser src/js/index.js -o dist/js/index.min.js --compress --mangle",
+    "start": "npx http-server ./src -p 8080 -o",
+    "dev": "npx live-server ./src --port=8080",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "npx postcss src/css/styles.css -o dist/css/styles.min.css --use cssnano",
+    "build:js": "npx terser src/js/main.js -o dist/js/main.min.js --compress --mangle",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "npx eslint src/js/**/*.js",
-    "lint:css": "npx stylelint 'src/css/**/*.css'",
-    "format": "npx prettier --write 'src/**/*.{html,css,js}'",
-    "validate": "npm run lint && npm run format"
+    "lint:css": "npx stylelint src/css/**/*.css",
+    "format": "npx prettier --write \"src/**/*.{html,css,js}\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
+    "boilerplate",
     "html",
     "css",
     "javascript",
-    "boilerplate",
-    "frontend"
+    "vanilla-js"
   ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "clean-css-cli": "^5.6.2",
-    "copyfiles": "^2.4.1",
-    "eslint": "^8.50.0",
-    "live-server": "^1.2.2",
-    "prettier": "^3.0.3",
-    "rimraf": "^5.0.5",
-    "stylelint": "^15.10.3",
-    "stylelint-config-standard": "^34.0.0",
-    "terser": "^5.20.0"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not dead"
-  ]
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "stylelint": "^16.1.0",
+    "stylelint-config-standard": "^36.0.0",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
+    "cssnano": "^6.0.2",
+    "terser": "^5.26.0",
+    "http-server": "^14.1.1",
+    "live-server": "^1.2.2"
+  }
 }

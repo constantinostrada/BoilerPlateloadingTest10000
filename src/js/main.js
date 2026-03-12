@@ -1,104 +1,264 @@
 /**
- * Main Entry Point
- * Initialize the application when DOM is ready
+ * Main JavaScript Entry Point
+ * BoilerPlateloadingTest10000
  */
 
-/**
- * Wait for DOM to be fully loaded
- */
-const ready = callback => {
-  if (document.readyState !== 'loading') {
-    callback();
-  } else {
-    document.addEventListener('DOMContentLoaded', callback);
-  }
-};
+'use strict';
 
-/**
- * Initialize application
- */
-ready(() => {
-  // Initialize the app
-  const app = new App();
-
-  // Log initialization
-  console.log('BoilerPlateloadingTest10000 initialized successfully!');
-
-  // Add any additional initialization logic here
-  initializeAnalytics();
-  checkBrowserCompatibility();
+// Wait for DOM to be fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize the application
+  initApp();
 });
 
 /**
- * Initialize analytics (placeholder)
+ * Initialize the application
  */
-function initializeAnalytics() {
-  // Add your analytics initialization here
-  // Example: Google Analytics, Mixpanel, etc.
-  console.log('Analytics initialized');
+function initApp() {
+  // Set current year in footer
+  setCurrentYear();
+
+  // Initialize navigation
+  initNavigation();
+
+  // Initialize forms
+  initContactForm();
+
+  // Initialize CTA button
+  initCTAButton();
+
+  // Initialize smooth scrolling
+  initSmoothScrolling();
+
+  // Log initialization
+  console.log('✅ Application initialized successfully');
 }
 
 /**
- * Check browser compatibility
+ * Set current year in footer
  */
-function checkBrowserCompatibility() {
-  const features = {
-    localStorage: typeof Storage !== 'undefined',
-    promise: typeof Promise !== 'undefined',
-    fetch: typeof fetch !== 'undefined',
-    es6: () => {
-      try {
-        eval('const test = (x) => x;');
-        return true;
-      } catch (e) {
-        return false;
-      }
-    },
-  };
-
-  const unsupportedFeatures = Object.entries(features)
-    .filter(([, supported]) =>
-      typeof supported === 'function' ? !supported() : !supported
-    )
-    .map(([feature]) => feature);
-
-  if (unsupportedFeatures.length > 0) {
-    console.warn(
-      'Your browser does not support the following features:',
-      unsupportedFeatures.join(', ')
-    );
-  } else {
-    console.log('All features are supported!');
+function setCurrentYear() {
+  const yearElement = document.getElementById('currentYear');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear();
   }
 }
 
 /**
- * Service Worker registration (for PWA support)
+ * Initialize navigation toggle for mobile
  */
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    // Uncomment when you have a service worker file
-    // navigator.serviceWorker
-    //   .register('/service-worker.js')
-    //   .then(registration => {
-    //     console.log('ServiceWorker registered:', registration);
-    //   })
-    //   .catch(error => {
-    //     console.log('ServiceWorker registration failed:', error);
-    //   });
+function initNavigation() {
+  const navToggle = document.querySelector('.nav__toggle');
+  const navMenu = document.querySelector('.nav__menu');
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('is-open');
+
+      // Update aria-expanded attribute
+      const isOpen = navMenu.classList.contains('is-open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close menu when clicking on a link
+    const navLinks = document.querySelectorAll('.nav__link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', event => {
+      if (!event.target.closest('.nav')) {
+        navMenu.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+}
+
+/**
+ * Initialize contact form
+ */
+function initContactForm() {
+  const contactForm = document.getElementById('contactForm');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', event => {
+      event.preventDefault();
+
+      // Get form data
+      const formData = new FormData(contactForm);
+      const data = Object.fromEntries(formData.entries());
+
+      // Validate form
+      if (validateContactForm(data)) {
+        // In a real application, you would send this data to a server
+        console.log('Form submitted:', data);
+
+        // Show success message
+        showNotification('Message sent successfully!', 'success');
+
+        // Reset form
+        contactForm.reset();
+      }
+    });
+  }
+}
+
+/**
+ * Validate contact form data
+ * @param {Object} data - Form data
+ * @returns {boolean} - Validation result
+ */
+function validateContactForm(data) {
+  const { name, email, message } = data;
+
+  if (!name || name.trim().length < 2) {
+    showNotification('Please enter a valid name', 'error');
+    return false;
+  }
+
+  if (!validateEmail(email)) {
+    showNotification('Please enter a valid email address', 'error');
+    return false;
+  }
+
+  if (!message || message.trim().length < 10) {
+    showNotification('Message must be at least 10 characters long', 'error');
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Initialize CTA button
+ */
+function initCTAButton() {
+  const ctaButton = document.getElementById('ctaButton');
+
+  if (ctaButton) {
+    ctaButton.addEventListener('click', () => {
+      // Scroll to features section
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        featuresSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+}
+
+/**
+ * Initialize smooth scrolling for anchor links
+ */
+function initSmoothScrolling() {
+  const anchorLinks = document.querySelectorAll('a[href^="#"]');
+
+  anchorLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      const targetId = link.getAttribute('href');
+
+      // Skip if it's just "#"
+      if (targetId === '#') {
+        return;
+      }
+
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        event.preventDefault();
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+
+        // Update URL without scrolling
+        history.pushState(null, null, targetId);
+      }
+    });
   });
 }
 
 /**
- * Handle unhandled promise rejections
+ * Show notification message
+ * @param {string} message - Notification message
+ * @param {string} type - Notification type (success, error, info, warning)
  */
-window.addEventListener('unhandledrejection', event => {
-  console.error('Unhandled promise rejection:', event.reason);
-});
+function showNotification(message, type = 'info') {
+  // Create notification element
+  const notification = document.createElement('div');
+  notification.className = `notification notification--${type}`;
+  notification.textContent = message;
+
+  // Add styles
+  Object.assign(notification.style, {
+    position: 'fixed',
+    top: '20px',
+    right: '20px',
+    padding: '16px 24px',
+    borderRadius: '8px',
+    backgroundColor: getNotificationColor(type),
+    color: '#ffffff',
+    fontWeight: '500',
+    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+    zIndex: '9999',
+    animation: 'slideInRight 0.3s ease-out',
+  });
+
+  // Add to DOM
+  document.body.appendChild(notification);
+
+  // Remove after 3 seconds
+  setTimeout(() => {
+    notification.style.animation = 'slideOutRight 0.3s ease-out';
+    setTimeout(() => {
+      document.body.removeChild(notification);
+    }, 300);
+  }, 3000);
+}
 
 /**
- * Handle errors
+ * Get notification color based on type
+ * @param {string} type - Notification type
+ * @returns {string} - Color value
  */
-window.addEventListener('error', event => {
-  console.error('Global error:', event.error);
-});
+function getNotificationColor(type) {
+  const colors = {
+    success: '#10b981',
+    error: '#ef4444',
+    warning: '#f59e0b',
+    info: '#06b6d4',
+  };
+
+  return colors[type] || colors.info;
+}
+
+// Add notification animations to document
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
