@@ -1,49 +1,42 @@
 # BoilerPlateloadingTest10000
 
-A production-ready boilerplate project built with HTML, CSS, and JavaScript.
+A modern, production-ready boilerplate for HTML, CSS, and JavaScript projects.
 
-## 📋 Description
+## Features
 
-This is a clean, minimal, and functional boilerplate for building modern web applications using vanilla HTML, CSS, and JavaScript. It follows best practices and includes a complete development environment setup with linting, formatting, and build tools.
+- 📁 Clean, organized project structure
+- 🎨 Modern CSS with CSS Grid and Flexbox
+- 🚀 Vanilla JavaScript (ES6+)
+- 🔧 ESLint for JavaScript linting
+- 💅 Stylelint for CSS linting
+- ✨ Prettier for code formatting
+- 📦 Build scripts for production
+- 🔥 Live development server
+- 📱 Responsive design ready
 
-## 🚀 Features
-
-- Clean and semantic HTML5 structure
-- Modern CSS3 with custom properties (CSS variables)
-- Vanilla JavaScript with ES6+ features
-- ESLint for code quality
-- Prettier for code formatting
-- Modular file structure
-- Production-ready build setup
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-BoilerPlateloadingTest10000/
-├── src/
-│   ├── index.html          # Main HTML file
-│   ├── css/
-│   │   ├── main.css        # Main styles
-│   │   ├── variables.css   # CSS variables
-│   │   └── reset.css       # CSS reset
-│   ├── js/
-│   │   ├── main.js         # Main JavaScript entry point
-│   │   ├── app.js          # Application logic
-│   │   └── utils.js        # Utility functions
-│   └── assets/
-│       └── images/         # Image assets
-├── scripts/
-│   └── build.js            # Build script
-├── tests/
-│   └── app.test.js         # Test files
-├── .eslintrc.json          # ESLint configuration
-├── .prettierrc             # Prettier configuration
-├── .gitignore              # Git ignore rules
-├── package.json            # Project dependencies
-└── README.md               # This file
+.
+├── public/              # Static assets
+│   ├── images/         # Image files
+│   └── fonts/          # Font files
+├── src/                # Source files
+│   ├── css/            # Stylesheets
+│   │   ├── base/       # Base styles
+│   │   ├── components/ # Component styles
+│   │   └── utils/      # Utilities and helpers
+│   ├── js/             # JavaScript files
+│   │   ├── modules/    # JS modules
+│   │   └── utils/      # Utility functions
+│   └── index.html      # Main HTML file
+├── .eslintrc.json      # ESLint configuration
+├── .prettierrc.json    # Prettier configuration
+├── .stylelintrc.json   # Stylelint configuration
+└── package.json        # Project dependencies
 ```
 
-## 🛠️ Setup Instructions
+## Getting Started
 
 ### Prerequisites
 
@@ -52,85 +45,66 @@ BoilerPlateloadingTest10000/
 
 ### Installation
 
-1. Clone or download this project
-2. Navigate to the project directory:
-   ```bash
-   cd BoilerPlateloadingTest10000
-   ```
+```bash
+# Install dependencies
+npm install
+```
 
-3. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-## 💻 Development
-
-### Start Development Server
+### Development
 
 ```bash
+# Start development server
+npm start
+
+# Start development server with watch mode
 npm run dev
 ```
 
-This will start a live development server with auto-reload functionality.
+The application will be available at `http://localhost:8080`
 
-### Start Static Server
-
-```bash
-npm start
-```
-
-This will serve the `src` directory on a local server.
-
-## 🔨 Build
+### Building for Production
 
 ```bash
+# Create production build
 npm run build
 ```
 
-Creates an optimized production build.
+The production files will be generated in the `dist/` directory.
 
-## 🧹 Code Quality
-
-### Linting
+### Code Quality
 
 ```bash
-npm run lint        # Check for linting errors
-npm run lint:fix    # Fix linting errors automatically
+# Lint JavaScript files
+npm run lint:js
+
+# Lint CSS files
+npm run lint:css
+
+# Run all linters
+npm run lint
+
+# Format code with Prettier
+npm run format
+
+# Run linting and formatting
+npm run validate
 ```
 
-### Formatting
+## Browser Support
 
-```bash
-npm run format      # Format code with Prettier
-```
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## 🧪 Testing
+## License
 
-```bash
-npm test
-```
+MIT License - feel free to use this project for your own purposes.
 
-Run the test suite using Jest.
-
-## 📝 Usage
-
-1. Edit `src/index.html` to modify the HTML structure
-2. Add your styles in `src/css/` directory
-3. Write your JavaScript code in `src/js/` directory
-4. Add images and assets to `src/assets/` directory
-
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License.
-
-## 📧 Contact
-
-For questions or feedback, please open an issue in the repository.

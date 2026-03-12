@@ -1,85 +1,75 @@
 # Contributing to BoilerPlateloadingTest10000
 
-First off, thank you for considering contributing to BoilerPlateloadingTest10000! It's people like you that make this project great.
+Thank you for considering contributing to this project! Here are some guidelines to help you get started.
 
-## Code of Conduct
-
-This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code.
-
-## How Can I Contribute?
+## How to Contribute
 
 ### Reporting Bugs
 
-Before creating bug reports, please check the existing issues list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible:
+If you find a bug, please create an issue with the following information:
 
-* Use a clear and descriptive title
-* Describe the exact steps which reproduce the problem
-* Provide specific examples to demonstrate the steps
-* Describe the behavior you observed after following the steps
-* Explain which behavior you expected to see instead and why
-* Include screenshots if possible
+- A clear and descriptive title
+- Steps to reproduce the issue
+- Expected behavior
+- Actual behavior
+- Screenshots (if applicable)
+- Browser and OS information
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion, please include:
+Enhancement suggestions are welcome! Please create an issue with:
 
-* Use a clear and descriptive title
-* Provide a step-by-step description of the suggested enhancement
-* Provide specific examples to demonstrate the steps
-* Describe the current behavior and explain which behavior you expected to see instead
-* Explain why this enhancement would be useful
+- A clear and descriptive title
+- Detailed description of the proposed enhancement
+- Any relevant examples or mockups
 
 ### Pull Requests
 
-* Fill in the required template
-* Do not include issue numbers in the PR title
-* Follow the JavaScript style guide
-* Include thoughtfully-worded, well-structured tests
-* Document new code
-* End all files with a newline
-
-## Style Guides
-
-### Git Commit Messages
-
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
-* Reference issues and pull requests liberally after the first line
-
-### JavaScript Style Guide
-
-* Follow the ESLint configuration provided in the project
-* Use ES6+ features
-* Use meaningful variable names
-* Comment complex logic
-* Keep functions small and focused
-
-### CSS Style Guide
-
-* Use CSS custom properties for theming
-* Follow BEM naming convention for classes
-* Keep selectors simple and avoid deep nesting
-* Mobile-first responsive design
-
-## Development Process
-
 1. Fork the repository
-2. Create a new branch from `main`
+2. Create a new branch (`git checkout -b feature/your-feature-name`)
 3. Make your changes
-4. Run tests and linting
-5. Commit your changes
-6. Push to your fork
-7. Submit a pull request
+4. Run linters and ensure code quality (`npm run validate`)
+5. Commit your changes (`git commit -m 'Add some feature'`)
+6. Push to the branch (`git push origin feature/your-feature-name`)
+7. Open a Pull Request
 
-## Testing
+## Code Style
 
-* Write tests for new features
-* Ensure all tests pass before submitting PR
-* Maintain or improve code coverage
+- Follow the existing code style
+- Use ESLint and Prettier configurations provided
+- Write meaningful commit messages
+- Comment your code where necessary
+- Keep functions small and focused
+
+## Code Quality Checklist
+
+Before submitting a PR, ensure:
+
+- [ ] Code follows the project's style guidelines
+- [ ] All linters pass (`npm run lint`)
+- [ ] Code is formatted (`npm run format`)
+- [ ] No console errors or warnings
+- [ ] Changes are tested in multiple browsers
+- [ ] Documentation is updated if needed
+
+## Development Setup
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+
+# Run linters
+npm run lint
+
+# Format code
+npm run format
+```
 
 ## Questions?
 
-Feel free to open an issue with your question or reach out to the maintainers.
+Feel free to open an issue for any questions or concerns.
 
 Thank you for contributing! 🎉
